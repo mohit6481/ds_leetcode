@@ -3,28 +3,43 @@
  * @return {boolean}
  */
 var canJump = function(nums) {
-    let len = nums.length;
-    let jumpCount = 0;
-    let max;
-    if (len === 1) return jumpCount;
+    // let len = nums.length;
+    // let jumpCount = 0;
+    // let max;
+    // if (len === 1) return jumpCount;
 
-    for (let i = 0; i < len;) {
-        max = i + nums[i];
-        jumpCount++;
-        if (max >= len - 1) return jumpCount;
+    // for (let i = 0; i < len;) {
+    //     max = i + nums[i];
+    //     jumpCount++;
+    //     if (max >= len - 1) return jumpCount;
 
-        let tempMax = max + nums[max];
-        let j = i + 1;
-        for (;j <= max ; j++) {
-            if (nums[j] + j >= tempMax) {
-                tempMax = nums[j] + j; 
-                i = j;
-            }
+    //     let tempMax = max + nums[max];
+    //     let j = i + 1;
+    //     for (;j <= max ; j++) {
+    //         if (nums[j] + j >= tempMax) {
+    //             tempMax = nums[j] + j; 
+    //             i = j;
+    //         }
+    //     }
+    //     i = nums[i] + i > nums[max] + max ? i : max
+    // }
+    
+    // return jumpCount;
+    
+    let near = 0, far = 0, jumps = 0;
+
+    while (far < nums.length - 1) {
+        let farthest = 0;
+        for (let i = near; i <= far; i++) {
+            farthest = Math.max(farthest, i + nums[i]);
         }
-        i = nums[i] + i > nums[max] + max ? i : max
+        near = far + 1;
+        far = farthest;
+        jumps++;
     }
 
-    return jumpCount;
+    return jumps;    
+
 };
 
 console.log(canJump([4,1,1,3,1,1,1])) //2
